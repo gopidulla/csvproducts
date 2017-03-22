@@ -1,0 +1,30 @@
+<h1>Bills</h1>
+
+<p>
+  Download:
+  <%= link_to "CSV", bills_path(format: "csv") %> |
+  <%= link_to "Excel", bills_path(format: "xls") %>
+</p>
+
+<table id="bills">
+  <tr>
+    <th>Section</th>
+    <th>Year</th>
+    <th>Month</th>
+    <th>Dvno</th>
+    <th>Typebill</th>
+    <th>Compactor</th>
+    <th>Rack</th>
+    <th>Shelf</th>
+  </tr>
+
+<%= render @bills %>
+
+</table>
+
+<h2>Import Bills</h2>
+
+<%= form_tag import_bills_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

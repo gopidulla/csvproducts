@@ -1,0 +1,35 @@
+
+<h1>Bill Import</h1>
+
+<p>A CSV or Excel file can be used to import records. The first row should be the column section. The following columns are allowed.</p>
+
+<ul>
+  <% Bill.columns.each do |column| %>
+    <% if column.section.in? ["id", "section", "year", "month", "dvno", "typebill", "compactor", "rock", "shelf"] %>
+      <li>
+        <strong><%= column.section %></strong> -
+        <%= column.type.to_s.titleize %> type
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<p>If an <strong>id</strong> is supplied it will update the matching record instead of creating a new one.</p>
+
+<%= form_for @bill_import do |f| %>
+  <% if @bill_import.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bill_import.errors.count, "error") %> prohibited this import from completing:</h2>
+      <ul>
+      <% @bill_import.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.file_field :file %>
+  </div>
+  <div class="buttons"><%= f.submit "Import" %></div>
+<% end %>
